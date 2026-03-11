@@ -7,7 +7,7 @@
 ## 👤 Sobre el Desarrollador
 
 <p align="center">
-  <img src="Foto_1.png" alt="Tu Foto" width="200" style="border-radius: 50%;">
+  <img src="Foto_1.jpeg" alt="Tu Foto" width="200" style="border-radius: 50%;">
 </p>
 
 ¡Hola! Soy **Brayan Olaya**, estudiante de **Ingeniería de Sistemas** de **4 semestre** en la **Universidad Autónoma de Bucaramanga (UNAB)**. Me apasiona el desarrollo backend y la creación de soluciones robustas utilizando tecnologías modernas. Este proyecto es una muestra de mis habilidades técnicas y mi compromiso con el aprendizaje continuo.
