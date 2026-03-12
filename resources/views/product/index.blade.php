@@ -29,48 +29,84 @@
     </section>
 
     <section class="max-w-7xl mx-auto px-6 md:px-16 py-24">
+        
+        {{-- HEADER CON BOTÓN AÑADIR PRODUCTO INCORPORADO AL DISEÑO --}}
         <div class="flex items-end justify-between mb-12 border-l-4 border-primary pl-6">
             <div>
                 <h2 class="text-4xl font-black uppercase tracking-tighter italic">Featured Drops</h2>
                 <p class="text-slate-500 dark:text-slate-400 mt-2 font-medium">Our most wanted performance gear this season.</p>
             </div>
-            <a class="hidden md:flex items-center gap-2 text-primary font-bold uppercase tracking-widest text-sm group" href="#">
-                See All 
-                <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
-            </a>
+            <div class="flex items-center gap-6">
+                {{-- NUEVO: Botón Add New Product --}}
+                <a href="{{ url('/product/create') }}" class="hidden md:flex items-center gap-2 bg-primary text-background-dark px-6 py-2.5 font-black uppercase tracking-widest text-xs hover:bg-white transition-colors shadow-[2px_2px_0px_0px_rgba(255,255,255,0.2)]">
+                    <span class="material-symbols-outlined text-[18px]">add</span>
+                    Add Product
+                </a>
+                
+                <a class="hidden md:flex items-center gap-2 text-primary font-bold uppercase tracking-widest text-sm group" href="#">
+                    See All 
+                    <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                </a>
+            </div>
         </div>
         
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             
             @foreach($milista as $product)
-            <div class="group cursor-pointer">
-                <div class="relative aspect-square bg-slate-100 dark:bg-white/5 overflow-hidden mb-4">
-                    
-                    {{-- APLICADO AQUÍ: Función asset() para enlazar correctamente al storage sin dañar tu diseño de background-image --}}
+            <div class="group flex flex-col relative">
+                
+                {{-- IMAGEN AHORA ES UN ENLACE AL SHOW --}}
+                <a href="{{ url('/product/' . $product->id) }}" class="relative aspect-square bg-slate-100 dark:bg-white/5 overflow-hidden mb-4 block">
                     <div class="w-full h-full bg-cover bg-center group-hover:scale-110 transition-transform duration-500" data-alt="{{ $product->name }}" style="background-image: url('{{ asset('storage/' . $product->image) }}');"></div>
                     
-                    {{-- Etiquetas dinámicas basadas en los campos de tu base de datos --}}
                     @if(isset($product->is_hot) && $product->is_hot)
-                        <span class="absolute top-4 left-4 bg-primary text-background-dark text-[10px] font-black px-2 py-1 uppercase">Hot</span>
+                        <span class="absolute top-4 left-4 bg-primary text-background-dark text-[10px] font-black px-2 py-1 uppercase z-10">Hot</span>
                     @elseif(isset($product->is_new) && $product->is_new)
-                        <span class="absolute top-4 left-4 bg-white text-background-dark text-[10px] font-black px-2 py-1 uppercase">New</span>
+                        <span class="absolute top-4 left-4 bg-white text-background-dark text-[10px] font-black px-2 py-1 uppercase z-10">New</span>
                     @endif
-                </div>
+                </a>
                 
-                {{-- Nombre del producto --}}
-                <h3 class="font-black uppercase text-lg italic tracking-tight">{{ $product->name }}</h3>
+                {{-- NOMBRE AHORA ES UN ENLACE AL SHOW --}}
+                <a href="{{ url('/product/' . $product->id) }}" class="hover:text-primary transition-colors">
+                    <h3 class="font-black uppercase text-lg italic tracking-tight">{{ $product->name }}</h3>
+                </a>
                 
-                {{-- Descripción o Categoría (limitada para no romper el diseño) --}}
                 <p class="text-slate-500 dark:text-slate-400 text-sm font-bold uppercase tracking-tighter mb-1">
                     {{ Str::limit($product->description, 30) }}
                 </p>
                 
-                {{-- Precio formateado --}}
-                <p class="text-primary font-black">${{ number_format($product->price, 2) }}</p>
+                {{-- CONTENEDOR INFERIOR: PRECIO Y BOTONES DE ACCIÓN --}}
+                <div class="flex justify-between items-end mt-auto pt-2">
+                    <p class="text-primary font-black">${{ number_format($product->price, 2) }}</p>
+                    
+                    {{-- ACCIONES (Visibles al hacer hover en desktop) --}}
+                    <div class="flex items-center gap-2 opacity-100 lg:opacity-0 group-hover:opacity-100 transition-opacity">
+                        
+                        <button class="flex items-center justify-center size-8 bg-white text-background-dark hover:bg-primary transition-colors" title="Add to Cart">
+                            <span class="material-symbols-outlined text-[16px]">add_shopping_cart</span>
+                        </button>
+                        
+                        {{-- FORMULARIO DE ELIMINACIÓN --}}
+                        <form action="{{ route('product.destroy', $product->id) }}" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este producto?');" class="m-0 p-0 flex">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="flex items-center justify-center size-8 border border-red-500/30 text-red-500 hover:bg-red-500 hover:text-white transition-colors" title="Delete Product">
+                                <span class="material-symbols-outlined text-[16px]">delete</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                
             </div>
             @endforeach
 
         </div>
+
+        {{-- PAGINACIÓN --}}
+        <div class="mt-16 pt-8 border-t border-white/10">
+            {{ $milista->links() }}
+        </div>
+        
     </section>
 
     <section class="bg-primary py-16">

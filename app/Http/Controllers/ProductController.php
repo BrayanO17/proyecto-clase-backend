@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class ProductController extends Controller
 {
     public function index(){
-        $productuctlist=Product::all();
+        $productuctlist=Product::paginate(12);
 
         return view("product.index", [
             "milista"=>$productuctlist
@@ -34,7 +34,7 @@ public function store(Request $request) {
     ]);
 
     $newProduct = new Product();
-    
+
     $newProduct->name = $request->input("nombre");
     $newProduct->description = $request->input("description");
     $newProduct->price = $request->input("precio");
@@ -58,5 +58,10 @@ public function store(Request $request) {
     public function show($id){
         return view("product.show");
 
+    }
+
+    public function destroy(Product $product){
+        $product->delete();
+        return redirect()->route("product.index");
     }
 }
