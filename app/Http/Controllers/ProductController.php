@@ -22,17 +22,34 @@ class ProductController extends Controller
         ]);
     }
 
-    public function store(Request $request){
-        $newProduct = new Product();
-        $newProduct->name = $request->input("nombre");
-        $newProduct->description = $request->input("description"); 
-        $newProduct->price = $request->input("precio");
-        $newProduct->category_id = $request->input("category_id");
+public function store(Request $request) {
+    // 1. Validar los datos (Buena práctica para evitar errores 500)
+    $request->validate([
+        'nombre' => 'required|string|max:255',
+        'precio' => 'required|numeric',
+        'category_id' => 'required|exists:categories,id', // Verifica que la categoría exista
+    ]);
 
-        $newProduct->save();
-        
-        return redirect()->route('product.index');
+    $newProduct = new Product();
+    
+    $newProduct->name = $request->input("nombre");
+    $newProduct->description = $request->input("description");
+    $newProduct->price = $request->input("precio");
+    $newProduct->category_id = $request->input("category_id");
+
+    $newProduct->status = $request->input('status'); 
+
+    if ($request->hasFile("imagen")) {
+        $ruta = $request->file("imagen")->store("imagenes", "public");
+        $newProduct->image = $ruta;
+    } else {
+        $newProduct->image = "no hay ruta";
     }
+
+    $newProduct->save(); 
+
+    return redirect()->route('product.index')->with('success', 'Producto creado exitosamente');
+}
 
 
     public function show($id){

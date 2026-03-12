@@ -45,8 +45,9 @@
             @foreach($milista as $product)
             <div class="group cursor-pointer">
                 <div class="relative aspect-square bg-slate-100 dark:bg-white/5 overflow-hidden mb-4">
-                    {{-- La imagen ahora viene de la base de datos --}}
-                    <div class="w-full h-full bg-cover bg-center group-hover:scale-110 transition-transform duration-500" data-alt="{{ $product->name }}" style="background-image: url('{{ $product->image }}');"></div>
+                    
+                    {{-- APLICADO AQUÍ: Función asset() para enlazar correctamente al storage sin dañar tu diseño de background-image --}}
+                    <div class="w-full h-full bg-cover bg-center group-hover:scale-110 transition-transform duration-500" data-alt="{{ $product->name }}" style="background-image: url('{{ asset('storage/' . $product->image) }}');"></div>
                     
                     {{-- Etiquetas dinámicas basadas en los campos de tu base de datos --}}
                     @if(isset($product->is_hot) && $product->is_hot)
