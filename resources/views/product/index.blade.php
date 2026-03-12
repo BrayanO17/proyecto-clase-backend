@@ -39,44 +39,36 @@
                 <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
             </a>
         </div>
+        
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div class="group cursor-pointer">
-                <div class="relative aspect-square bg-slate-100 dark:bg-white/5 overflow-hidden mb-4">
-                    <div class="w-full h-full bg-cover bg-center group-hover:scale-110 transition-transform duration-500" data-alt="Bright red high performance running shoe" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDDyKgOrR0M6R7PEiYlQr1wPpuDdTNE-BTxRfbKMTqQKwCA5zsQb6sjJsyNGE7P-adRkvWu6UOQFPh0N0mISajPpMNcl5VOogp10fApWCqImDZAzR7Bgaz2zewR55VM7HjFFGhIl_qPhpdgGE1UgdwsMbVBEQLYkzAAXFMj2Whqs0ANXB7o4PfvuVeN5ssRA_WzeAkCTicvCNcQpzZh27p8O1nsBmyY-hFyRAqitxeQIFkzYLJcjCOebtCSgUBNdW8mRCdixyS3BNk');"></div>
-                    <span class="absolute top-4 left-4 bg-primary text-background-dark text-[10px] font-black px-2 py-1 uppercase">Hot</span>
-                </div>
-                <h3 class="font-black uppercase text-lg italic tracking-tight">Nitro-Boost Runner</h3>
-                <p class="text-slate-500 dark:text-slate-400 text-sm font-bold uppercase tracking-tighter mb-1">Men's Running</p>
-                <p class="text-primary font-black">$180.00</p>
-            </div>
             
+            @foreach($milista as $product)
             <div class="group cursor-pointer">
                 <div class="relative aspect-square bg-slate-100 dark:bg-white/5 overflow-hidden mb-4">
-                    <div class="w-full h-full bg-cover bg-center group-hover:scale-110 transition-transform duration-500" data-alt="Classic black and white training sneakers" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBrSl8TmD1Qy5TTSnuMgSTxPCBGKybm0vsx-pg7ktAp9kBRwyldpyJu19nG1l8Y3Q7_bZgvcD-l7-G3YCU9KVojGiyvM38hrXYlCRijBqLPAKkMZ1Zx00ioqLh_ATB5IeQJhtu-ZaerS6lLNwbpeA0GtXoKZ9YbaQQQS2r1Q8isYexEBkHXeybRgu55m9n4OpwasJ2_iwxWC2E_s-_L1Xkadd2y6AgxJaH_ZwvmNuYxOPTC3WIDw3bYGSS7JgEJIRYqWYmzBA8DQUI');"></div>
+                    {{-- La imagen ahora viene de la base de datos --}}
+                    <div class="w-full h-full bg-cover bg-center group-hover:scale-110 transition-transform duration-500" data-alt="{{ $product->name }}" style="background-image: url('{{ $product->image }}');"></div>
+                    
+                    {{-- Etiquetas dinámicas basadas en los campos de tu base de datos --}}
+                    @if(isset($product->is_hot) && $product->is_hot)
+                        <span class="absolute top-4 left-4 bg-primary text-background-dark text-[10px] font-black px-2 py-1 uppercase">Hot</span>
+                    @elseif(isset($product->is_new) && $product->is_new)
+                        <span class="absolute top-4 left-4 bg-white text-background-dark text-[10px] font-black px-2 py-1 uppercase">New</span>
+                    @endif
                 </div>
-                <h3 class="font-black uppercase text-lg italic tracking-tight">Vortex Training Shoe</h3>
-                <p class="text-slate-500 dark:text-slate-400 text-sm font-bold uppercase tracking-tighter mb-1">Unisex Training</p>
-                <p class="text-primary font-black">$145.00</p>
+                
+                {{-- Nombre del producto --}}
+                <h3 class="font-black uppercase text-lg italic tracking-tight">{{ $product->name }}</h3>
+                
+                {{-- Descripción o Categoría (limitada para no romper el diseño) --}}
+                <p class="text-slate-500 dark:text-slate-400 text-sm font-bold uppercase tracking-tighter mb-1">
+                    {{ Str::limit($product->description, 30) }}
+                </p>
+                
+                {{-- Precio formateado --}}
+                <p class="text-primary font-black">${{ number_format($product->price, 2) }}</p>
             </div>
-            
-            <div class="group cursor-pointer">
-                <div class="relative aspect-square bg-slate-100 dark:bg-white/5 overflow-hidden mb-4">
-                    <div class="w-full h-full bg-cover bg-center group-hover:scale-110 transition-transform duration-500" data-alt="Technical black compression hoodie" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD2NvJbSYnxBm5RfEUg8UVwZ6m0cIkSfH6v2bgdRSOG03VGk8Qn51qAjpmYanGWDNi3x5qbR8IEGbn9mGYsl4nkRssEi4-O3YXryjUPYkl6VrKLxTGF9uGhEWn1OcWHtbryL18VR7v1zPDbcbELjAfvADUPFailmdYvFM9xvr7PBWQhn8Mt1mJwLmwVdXxyDdsOYh8J_f-SqKcrghCnvzNbCjG9qDvZkz2Hl1RkE7fUuS5oUwlTbmHpmEQzuJqf6nC0kfd2mnxpP68');"></div>
-                    <span class="absolute top-4 left-4 bg-white text-background-dark text-[10px] font-black px-2 py-1 uppercase">New</span>
-                </div>
-                <h3 class="font-black uppercase text-lg italic tracking-tight">AeroLayer Hoodie</h3>
-                <p class="text-slate-500 dark:text-slate-400 text-sm font-bold uppercase tracking-tighter mb-1">Apparel</p>
-                <p class="text-primary font-black">$95.00</p>
-            </div>
-            
-            <div class="group cursor-pointer">
-                <div class="relative aspect-square bg-slate-100 dark:bg-white/5 overflow-hidden mb-4">
-                    <div class="w-full h-full bg-cover bg-center group-hover:scale-110 transition-transform duration-500" data-alt="Neon green lightweight gym bag" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBHgj_3NHaRF3H980hn3SOTBTXOnQIfwpRHf0VMfHjbWMFt27mJP1v_Rcrh4xH8gZAqY5b5QXa5Iw-OD7Bclmep-vwVkd9o1b0lFsyoLo364oM2CGdU5Sk_bcYHknfUUX8k8iYjlatk3cL2_jq4srYhdUjXozzbakie9asoz9E5fR93oeVWUISYeoQfy2bOHQjQZ4hExBzH8a74ocd4RBxfx9duiRVHGvwG52uNgpHgOK2itAGiKu9yWItaxn61U-gs-dxuXYSLJGI');"></div>
-                </div>
-                <h3 class="font-black uppercase text-lg italic tracking-tight">Volt Speed Pack</h3>
-                <p class="text-slate-500 dark:text-slate-400 text-sm font-bold uppercase tracking-tighter mb-1">Accessories</p>
-                <p class="text-primary font-black">$60.00</p>
-            </div>
+            @endforeach
+
         </div>
     </section>
 
