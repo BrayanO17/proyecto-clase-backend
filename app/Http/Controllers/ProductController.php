@@ -23,11 +23,14 @@ class ProductController extends Controller
     }
 
 public function store(Request $request) {
-    // 1. Validar los datos (Buena práctica para evitar errores 500)
+
     $request->validate([
-        'nombre' => 'required|string|max:255',
-        'precio' => 'required|numeric',
-        'category_id' => 'required|exists:categories,id', // Verifica que la categoría exista
+        "nombre"=>"required|min:5|max:255",
+        "description"=>"required",
+        "precio"=>"required|numeric",
+        "category_id"=>"required",
+        "imagen"=>"required",
+
     ]);
 
     $newProduct = new Product();
@@ -37,7 +40,7 @@ public function store(Request $request) {
     $newProduct->price = $request->input("precio");
     $newProduct->category_id = $request->input("category_id");
 
-    $newProduct->status = $request->input('status'); 
+    $newProduct->status = $request->has('status') ? 'active' : 'inactive';
 
     if ($request->hasFile("imagen")) {
         $ruta = $request->file("imagen")->store("imagenes", "public");
