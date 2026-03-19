@@ -100,17 +100,21 @@
                           text-slate-500 px-3 pt-4 pb-2">
                     Sales
                 </p>
-                <a href="/admin/orders"
-                   class="flex items-center gap-3 px-3 py-2.5 rounded-lg 
-                          text-sm font-bold transition-colors 
-                          text-slate-400 hover:bg-white/5 hover:text-white">
+                <a href="{{ route('admin.orders.index') }}"
+                   class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-bold
+                          transition-colors
+                          {{ request()->is('admin/orders*')
+                             ? 'bg-primary/10 text-primary'
+                             : 'text-slate-400 hover:bg-white/5 hover:text-white' }}">
                     <span class="material-symbols-outlined text-xl">receipt_long</span>
                     Orders
                 </a>
-                <a href="/admin/customers"
-                   class="flex items-center gap-3 px-3 py-2.5 rounded-lg 
-                          text-sm font-bold transition-colors 
-                          text-slate-400 hover:bg-white/5 hover:text-white">
+                <a href="{{ route('admin.customers.index') }}"
+                   class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-bold
+                          transition-colors
+                          {{ request()->is('admin/customers*')
+                             ? 'bg-primary/10 text-primary'
+                             : 'text-slate-400 hover:bg-white/5 hover:text-white' }}">
                     <span class="material-symbols-outlined text-xl">group</span>
                     Customers
                 </a>

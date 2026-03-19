@@ -8,11 +8,20 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function index(){
-        $productuctlist=Product::paginate(12);
+public function index()
+    {
+        $query = Product::query();
+
+        // Filtro de búsqueda
+        if (request('search')) {
+            $query->where('name', 'like', '%' . request('search') . '%')
+                ->orWhere('description', 'like', '%' . request('search') . '%');
+        }
+
+        $productuctlist = $query->paginate(12)->withQueryString();
 
         return view("product.index", [
-            "milista"=>$productuctlist
+            "milista" => $productuctlist
         ]);
     }
     public function create(){

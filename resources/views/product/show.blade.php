@@ -90,15 +90,33 @@
             {{-- BOTONES --}}
             <div class="pt-6 border-t border-slate-200 dark:border-primary/10">
                 <div class="flex flex-col gap-4">
-                    <button class="w-full bg-primary hover:brightness-110 
-                                   text-background-dark font-black uppercase 
-                                   italic tracking-tighter py-4 text-xl rounded 
-                                   shadow-lg shadow-primary/20 transition-all 
-                                   active:scale-[0.98] flex items-center 
-                                   justify-center gap-2">
-                        <span class="material-symbols-outlined">add_shopping_cart</span>
-                        Add to Cart
-                    </button>
+
+                    {{-- SUCCESS MESSAGE --}}
+                    @if(session('success'))
+                    <div class="p-3 bg-primary/10 border border-primary/30 rounded-lg 
+                                flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary text-sm">
+                            check_circle
+                        </span>
+                        <p class="text-primary font-bold text-sm">{{ session('success') }}</p>
+                    </div>
+                    @endif
+
+                    {{-- ADD TO CART FORM --}}
+                    <form action="{{ route('cart.add', $product->id) }}" method="POST">
+                        @csrf
+                        <button type="submit"
+                                class="w-full bg-primary hover:brightness-110 
+                                       text-background-dark font-black uppercase italic 
+                                       tracking-tighter py-4 text-xl rounded shadow-lg 
+                                       shadow-primary/20 transition-all active:scale-[0.98] 
+                                       flex items-center justify-center gap-2">
+                            <span class="material-symbols-outlined">add_shopping_cart</span>
+                            Add to Cart
+                        </button>
+                    </form>
+
+                    {{-- BACK TO PRODUCTS --}}
                     <a href="{{ route('product.index') }}"
                        class="w-full border-2 border-slate-200 dark:border-primary/20 
                               hover:border-primary text-slate-900 dark:text-slate-100 

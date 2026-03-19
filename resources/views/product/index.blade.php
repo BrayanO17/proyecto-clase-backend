@@ -82,9 +82,16 @@
                     {{-- ACCIONES (Visibles al hacer hover en desktop) --}}
                     <div class="flex items-center gap-2 opacity-100 lg:opacity-0 group-hover:opacity-100 transition-opacity">
                         
-                        <button class="flex items-center justify-center size-8 bg-white text-background-dark hover:bg-primary transition-colors" title="Add to Cart">
-                            <span class="material-symbols-outlined text-[16px]">add_shopping_cart</span>
-                        </button>
+                        {{-- FORMULARIO DE AÑADIR AL CARRITO --}}
+                        <form action="{{ route('cart.add', $product->id) }}" method="POST" class="m-0 p-0 flex">
+                            @csrf
+                            <button type="submit"
+                                    class="flex items-center justify-center size-8 bg-white 
+                                           text-background-dark hover:bg-primary transition-colors"
+                                    title="Add to Cart">
+                                <span class="material-symbols-outlined text-[16px]">add_shopping_cart</span>
+                            </button>
+                        </form>
                         
                         {{-- FORMULARIO DE ELIMINACIÓN --}}
                         <form action="{{ route('product.destroy', $product->id) }}" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este producto?');" class="m-0 p-0 flex">
