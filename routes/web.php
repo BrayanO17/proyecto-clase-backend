@@ -2,6 +2,8 @@
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
+
 
 Route::get('/', HomeController::class);
 
@@ -14,3 +16,6 @@ Route::prefix("/product")->controller(ProductController::class)->group(function(
 
 });
 
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('/', [AdminController::class, 'index'])->name('index');
+});
