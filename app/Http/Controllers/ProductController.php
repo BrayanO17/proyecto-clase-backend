@@ -55,9 +55,13 @@ public function store(Request $request) {
 }
 
 
-    public function show($id){
-        return view("product.show");
-
+    public function show($id)
+    {
+        $product = Product::findOrFail($id);
+        
+        return view("product.show", [
+            "product" => $product
+        ]);
     }
 
     public function destroy(Product $product){
